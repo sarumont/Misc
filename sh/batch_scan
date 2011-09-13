@@ -1,0 +1,61 @@
+#!/bin/sh
+
+print_usage() {
+	echo "Usage: $0 -n name [-d] [-l] [-v] [-f]"
+	echo "  -f specifies flatbed scanning"
+	echo "  -d specifies duplex scanning"
+	echo "  -l specifies legal-sized paper (default is letter)"
+	echo "  -v verbose mode"
+	exit 1
+}
+
+SCANIMAGE=/usr/local/bin/scanimage
+NOW=`date +%s`
+WILDCARD_NAME="/tmp/$NOW/scan_%d_.pnm"
+
+SCANNER="pixma:MX860_172.21.2.30"
+SOURCE="Automatic Document Feeder"
+SIZE_ADJ="-y 279"
+VERBOSE=""
+while getopts dlvn:f o
+do
+	case "$o" in
+		f) 
+			SOURCE="Flatbed"
+			;;
+		d) 
+			SOURCE="ADF Duplex"
+			DUPLEX="y"
+			;;
+		n) NAME=$OPTARG ;;
+		l) SIZE_ADJ="";;
+		v) VERBOSE="-p";;
+		[?]) print_usage
+	esac
+done
+
+if test -z $NAME; then
+	print_usage
+fi
+
+mkdir "/tmp/$NOW"
+echo "Temporary directory: $WILDCARD_NAME"
+
+$SCANIMAGE -v -d $SCANNER --batch="$WILDCARD_NAME" --source "$SOURCE" --resolution 150 $SIZE_ADJ $VERBOSE
+
+# flip all even-numbered files (they will be upside down)
+if test -n $DUPLEX; then
+
+	for f in /tmp/$NOW/scan_*_.pnm
+	do
+		num=`echo "$f" | awk -F "_" '{ print $2 }'`
+		mod=$(( $num % 2 ))
+		if test $mod -eq 0; then
+			echo "  Rotating $f"
+			convert $f -rotate 180 $f
+		fi
+	done
+fi
+
+convert -scale 850x1100 -define pdf:use-trimbox=true /tmp/$NOW/*.pnm $NAME.pdf
+rm -rf /tmp/$NOW

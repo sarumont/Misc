@@ -1,0 +1,31 @@
+#!/usr/local/bin/bash
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/root/bin:/usr/local/sbin:~/.bin"
+DEBUG=0
+
+if [[ $DEBUG -eq 1 ]]; then
+	echo -n "Running dirvish-runall..."
+fi
+
+dirvish-runall 2>&1 >/dev/null
+if [[ $? -eq 0 ]]; then
+	if [[ $DEBUG -eq 1 ]]; then
+		echo "OK"
+	fi
+else
+	echo "dirvish-runall failed: $?"
+	exit 1
+fi
+
+if [[ $DEBUG -eq 1 ]]; then
+	echo -n "Running dirvish-expire..."
+fi
+dirvish-expire 2>&1 >/dev/null
+if [[ $? -eq 0 ]]; then
+	if [[ $DEBUG -eq 1 ]]; then
+		echo "OK"
+	fi
+else
+	echo "dirvish-expire failed: $?"
+	exit 1
+fi
