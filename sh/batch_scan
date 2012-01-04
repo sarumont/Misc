@@ -9,9 +9,9 @@ print_usage() {
 	exit 1
 }
 
-SCANIMAGE=/usr/local/bin/scanimage
+SCANIMAGE=/usr/bin/scanimage
 NOW=`date +%s`
-WILDCARD_NAME="/tmp/$NOW/scan_%d_.pnm"
+WILDCARD_NAME="/tmp/$NOW/scan_%02d_.pnm"
 
 SCANNER="pixma:MX860_172.21.2.30"
 SOURCE="Automatic Document Feeder"
@@ -44,7 +44,7 @@ echo "Temporary directory: $WILDCARD_NAME"
 $SCANIMAGE -v -d $SCANNER --batch="$WILDCARD_NAME" --source "$SOURCE" --resolution 150 $SIZE_ADJ $VERBOSE
 
 # flip all even-numbered files (they will be upside down)
-if test -n $DUPLEX; then
+if test -n "$DUPLEX"; then
 
 	for f in /tmp/$NOW/scan_*_.pnm
 	do
@@ -58,4 +58,4 @@ if test -n $DUPLEX; then
 fi
 
 convert -scale 850x1100 -define pdf:use-trimbox=true /tmp/$NOW/*.pnm $NAME.pdf
-rm -rf /tmp/$NOW
+#rm -rf /tmp/$NOW
