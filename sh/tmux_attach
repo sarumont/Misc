@@ -2,7 +2,7 @@
 
 $( tmux has -t $1 )
 if test $? -eq 0; then
-	tmux -2 attach-session -t $1
+	TERM=xterm-256color tmux -2 attach-session -t $1
 else
-	tmux -2 new-session -s $1
+	TERM=xterm-256color tmux -2 new-session -s $1
 fi
