@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+# Script to remove unwanted crap from a fresh lubuntu installation. This includes a lot of the LXDE crap, as I use awesome WM (http://awesome.naquadah.org/)
+
+sudo apt-get remove \
+	abiword \
+	abiword-common \
+	abiword-plugin-grammar \
+	abiword-plugin-mathview \
+	ace-of-penguins \
+	audacious \
+	audacious-plugins \
+	audacious-plugins-data \
+	blueman \
+	catfish \
+	chromium-browser \
+	chromium-browser-l10n \
+	chromium-codecs-ffmpeg \
+	galculator \
+	gnumeric \
+	gnumeric-common \
+	gnumeric-doc \
+	guvcview \
+	hardinfo \
+	leafpad \
+	lubuntu-lxpanel-icons \
+	lubuntu-software-center \
+	lxappearance \
+	lxinput \
+	lxkeymap \
+	lxlauncher \
+	lxmenu-data \
+	lxpanel \
+	lxpanel-indicator-applet-plugin \
+	lxrandr \
+	lxsession \
+	lxsession-data \
+	lxsession-edit \
+	lxshortcut \
+	lxtask \
+	lxterminal \
+	mtpaint \
+	obconf \
+	openbox \
+	openbox-themes \
+	pidgin \
+	pidgin-data \
+	pidgin-libnotify \
+	pidgin-microblog \
+	sylpheed \
+	sylpheed-doc \
+	sylpheed-i18n \
+	sylpheed-plugins \
+	transmission \
+	tsconf \
+	wvdial \
+	xfburn \
+	xfce-keyboard-shortcuts \
+	xfce4-notifyd \
+	xfce4-power-manager \
+	xfce4-power-manager-data \
+	xfconf \
+	xpad
+
+# remove unneeded dependencies
+sudo apt-get --purge autoremove
+
+# purge unneeded configs
+dpkg --get-selections | grep deinstall | sed 's/deinstall/\lpurge/' | sudo dpkg --set-selections; sudo dpkg -Pa
