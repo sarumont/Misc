@@ -41,7 +41,7 @@ fi
 mkdir "/tmp/$NOW"
 echo "Temporary directory: $WILDCARD_NAME"
 
-$SCANIMAGE -v -d $SCANNER --batch="$WILDCARD_NAME" --source "$SOURCE" --resolution 150 $SIZE_ADJ $VERBOSE
+$SCANIMAGE -v -d $SCANNER --batch="$WILDCARD_NAME" --source "$SOURCE" --resolution 75 $SIZE_ADJ $VERBOSE
 
 # flip all even-numbered files (they will be upside down)
 if test -n "$DUPLEX"; then
