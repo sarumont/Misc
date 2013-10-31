@@ -23,6 +23,7 @@ sudo apt-get remove \
 	guvcview \
 	hardinfo \
 	leafpad \
+	lightdm \
 	lubuntu-lxpanel-icons \
 	lubuntu-software-center \
 	lxappearance \
