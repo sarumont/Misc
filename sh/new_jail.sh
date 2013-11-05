@@ -22,6 +22,7 @@ mkdir /storage/jails/${JAIL}_ro
 echo "/storage/jails/root /storage/jails/${JAIL}_ro nullfs ro 0 0" >> /etc/fstab
 echo "/storage/jails/${JAIL} /storage/jails/${JAIL}_ro/s nullfs rw 0 0" >> /etc/fstab
 echo "/usr/ports /storage/jails/${JAIL}_ro/usr/ports nullfs noatime,rw 0 0" >> /etc/fstab
+echo "/storage/decrypted/${JAIL} /storage/jails/${JAIL}_ro/storage nullfs noatime,rw 0 0" >> /etc/fstab
 
 echo "jail_${JAIL}_hostname=\"${JAIL}\"" >> /etc/rc.conf
 echo "jail_${JAIL}_ip=\"${IP}\"" >> /etc/rc.conf
