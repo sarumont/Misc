@@ -1,0 +1,148 @@
+#!/bin/sh
+# 
+# Script to take a basic *buntu installation and install baseline applications useful for (my)
+# development machine / desktop
+#
+
+# During install, make a bullshit user *or* be prepared to shift UID to 1001
+# TODO: automate user creation, git clone of new $HOME
+
+print_usage() {
+	echo "Usage: $0 [-x] [-m] [-o]"
+	echo "    -x signals Xorg is to be included"
+	echo "    -m signals mpd/mpc is to be included"
+	echo "    -o signals nVidia optimus support is to be included. Only enabled if xorg is enabled"
+}
+
+while getopts xmo: o
+do
+	case "$o" in
+		x)
+			xorg=1 ;;
+		m)
+			mpd=1 ;;
+		o)
+			optimus=1 ;;
+		[?]) 
+			print_usage
+			exit 1
+	esac
+done
+
+# Add PPAs
+sudo add-apt-repository ppa:webupd8team/java
+if test $xorg; then
+	sudo dpkg --add-architecture i386
+	sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+	sudo add-apt-repository ppa:xorg-edgers/ppa
+	sudo add-apt-repository ppa:ubuntu-wine/ppa
+	sudo add-apt-repository ppa:klaus-vormweg/awesome
+	if test $optimus; then
+		sudo add-apt-repository ppa:bumblebee/stable
+	fi
+fi
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get purge network-manager network-manager-gnome
+
+# basics
+sudo apt-get install \
+	ack-grep \
+	aptitude \
+	cpufrequtils \
+	curl \
+	dos2unix \
+	flac \
+	git \
+	gnupg-agent \
+	htop \
+	keychain \
+	oracle-java6-installer \
+	oracle-java7-installer \
+	oracle-java8-installer \
+	pwgen \
+	python-gconf \
+	python-numpy \
+	python-pip \
+	rake \
+	ruby-dev \
+	smartmontools \
+	subversion \
+	tmux \
+	traceroute \
+	unrar \
+	whois \
+	wpa_gui \
+	zsh
+
+if test $xorg; then
+
+	# xorg crap
+	sudo apt-get install \
+		awesome \
+		geequie \
+		gimp \
+		gitk \
+		gtk2-engines-equinox \
+		gtk2-engines-murrine \
+		gtk2-engines-pixbuf \
+		gtk3-engines-unico \
+		libreoffice \
+		mplayer \
+		rdesktop \
+		redshift \
+		rox-filer \
+		screenruler \
+		skype \
+		slim \
+		vim-gtk \
+		virtualbox \
+		wine1.7 \
+		xbacklight
+
+	# Skype / multi-arch
+	sudo echo "/usr/lib/i386-linux-gnu/mesa/" > /etc/ld.so.conf.d/skype.conf
+
+	# elicit
+	git clone https://github.com/rephorm/elicit-gtk
+	cd elicit-gtk
+	sudo ./setup.py install
+
+	if test $optimus; then
+		sudo apt-get install \
+			bumblebee \
+			bumblebee-nvidia \
+			primus \
+			linux-headers-generic
+	fi
+
+else
+	# alternatives
+	sudo apt-get install vim-ruby
+fi
+
+if test $mpd; then
+	# beets
+	sudo apt-get install \
+		mpc \
+		mpd \
+		ncmpcpp
+	sudo pip install unidecode munkres pylast beets
+fi
+
+# Optional:
+# TODO: Fix config or remove
+#sudo apt-get install autofs 
+
+# configure ethernet bonding, wicd, etc.
+#sudo apt-get install ifenslave
+## manual: config
+
+# TODO: sleep, udev scripts
+# TODO: slim theme
+
+echo "\nManual installation required for google-chrome, google-talkplugin, steam, btsync, beersmith, android SDK"
+if test $optimus; then
+	echo "Don't forget to configure optimus and reboot."
+fi
