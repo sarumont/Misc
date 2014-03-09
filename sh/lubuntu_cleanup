@@ -63,6 +63,9 @@ sudo apt-get remove \
 	xfconf \
 	xpad
 
+# remove graphics drivers that don't make sense
+sudo apt-get remove xserver-xorg-video-{ati,cirrus,fbdev,mach64,mga,neomagic,nouveau,openchrome,qxl,r128,radeon,s3,savage,siliconmotion,sis,sisusb,tdfx,trident}
+
 # remove unneeded dependencies
 sudo apt-get --purge autoremove
 
