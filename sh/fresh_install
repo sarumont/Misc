@@ -142,6 +142,7 @@ sudo mv root.crt /usr/share/ca-certificates/cacert.org/cacert.org_root.crt
 sudo mv class3.crt /usr/share/ca-certificates/cacert.org/cacert.org_class3.crt
 sudo sh -c 'echo "cacert.org/cacert.org_root.crt" >> /etc/ca-certificates.conf'
 sudo sh -c 'echo "cacert.org/cacert.org_class3.crt" >> /etc/ca-certificates.conf'
+sudo update-ca-certificates --fresh
 
 # configure ethernet bonding, wicd, etc.
 #sudo apt-get install ifenslave
