@@ -43,7 +43,6 @@ sudo apt-get remove \
 	mtpaint \
 	obconf \
 	openbox \
-	openbox-themes \
 	pidgin \
 	pidgin-data \
 	pidgin-libnotify \
@@ -64,7 +63,24 @@ sudo apt-get remove \
 	xpad
 
 # remove graphics drivers that don't make sense
-sudo apt-get remove xserver-xorg-video-{ati,cirrus,fbdev,mach64,mga,neomagic,nouveau,openchrome,qxl,r128,radeon,s3,savage,siliconmotion,sis,sisusb,tdfx,trident}
+sudo apt-get remove xserver-xorg-video-ati \
+	xserver-xorg-video-cirrus \
+	xserver-xorg-video-fbdev \
+	xserver-xorg-video-mach64 \
+	xserver-xorg-video-mga \
+	xserver-xorg-video-neomagic \
+	xserver-xorg-video-nouveau \
+	xserver-xorg-video-openchrome \
+	xserver-xorg-video-qxl \
+	xserver-xorg-video-r128 \
+	xserver-xorg-video-radeon \
+	xserver-xorg-video-s3 \
+	xserver-xorg-video-savage \
+	xserver-xorg-video-siliconmotion \
+	xserver-xorg-video-sis \
+	xserver-xorg-video-sisusb \
+	xserver-xorg-video-tdfx \
+	xserver-xorg-video-trident
 
 # remove unneeded dependencies
 sudo apt-get --purge autoremove

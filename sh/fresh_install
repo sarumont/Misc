@@ -44,11 +44,11 @@ fi
 
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get install wicd wicd-curses
 sudo apt-get purge network-manager network-manager-gnome
 
 # basics
-sudo apt-get install \
-	ack-grep \
+sudo apt-get install ack-grep \
 	aptitude \
 	cpufrequtils \
 	curl \
@@ -73,15 +73,14 @@ sudo apt-get install \
 	traceroute \
 	unrar \
 	whois \
-	wpa_gui \
 	zsh
 
 if test $xorg; then
 
-	# xorg crap
-	sudo apt-get install \
+	# xorg/desktop crap
+	sudo apt-get install autofs \
 		awesome \
-		geequie \
+		geeqie \
 		gimp \
 		gitk \
 		gtk2-engines-equinox \
@@ -90,6 +89,7 @@ if test $xorg; then
 		gtk3-engines-unico \
 		libreoffice \
 		mplayer \
+		pmount \
 		rdesktop \
 		redshift \
 		rox-filer \
@@ -99,7 +99,8 @@ if test $xorg; then
 		vim-gtk \
 		virtualbox \
 		wine1.7 \
-		xbacklight
+		xbacklight \
+		xclip
 
 	# Skype / multi-arch
 	sudo echo "/usr/lib/i386-linux-gnu/mesa/" > /etc/ld.so.conf.d/skype.conf
@@ -117,30 +118,36 @@ if test $xorg; then
 			linux-headers-generic
 	fi
 
+	ln -s ~/.xfiles/slim-moria-theme /usr/share/slim/themes/moria
+
 else
 	# alternatives
-	sudo apt-get install vim-ruby
+	sudo apt-get install vim-nox
 fi
 
 if test $mpd; then
 	# beets
-	sudo apt-get install \
-		mpc \
-		mpd \
-		ncmpcpp
+	sudo apt-get install mpc mpd ncmpcpp
 	sudo pip install unidecode munkres pylast beets
+
+	mkdir ~/.ncmpcpp
+	ln -s ~/.dotfiles/ncmpcpp_config ~/.ncmpcpp/config
 fi
 
-# Optional:
-# TODO: Fix config or remove
-#sudo apt-get install autofs 
+# cacertificates
+wget http://www.cacert.org/certs/root.crt
+wget http://www.cacert.org/certs/class3.crt
+sudo mkdir /usr/share/ca-certificates/cacert.org
+sudo mv root.crt /usr/share/ca-certificates/cacert.org/cacert.org_root.crt
+sudo mv class3.crt /usr/share/ca-certificates/cacert.org/cacert.org_class3.crt
+sudo sh -c 'echo "cacert.org/cacert.org_root.crt" >> /etc/ca-certificates.conf'
+sudo sh -c 'echo "cacert.org/cacert.org_class3.crt" >> /etc/ca-certificates.conf'
 
 # configure ethernet bonding, wicd, etc.
 #sudo apt-get install ifenslave
 ## manual: config
 
 # TODO: sleep, udev scripts
-# TODO: slim theme
 
 echo "\nManual installation required for google-chrome, google-talkplugin, steam, btsync, beersmith, android SDK"
 if test $optimus; then
