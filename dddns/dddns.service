@@ -3,7 +3,7 @@ Description=DNSimple DDNS
 
 [Service]
 Type=simple
-EnvironmentFile="/etc/dddns.env"
+EnvironmentFile=/etc/dddns.env
 ExecStart=/opt/dddns/dddns.sh
 
 [Install]

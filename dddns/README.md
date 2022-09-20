@@ -15,6 +15,6 @@ Create `/etc/dddns.env` containing:
 
 Clone/copy/symlink this directory to `/opt/dddns`.
     
-    sudo ln -s /opt/dddns/dddns.timer /etc/systemd/system/ddns.timer
-    sudo ln -s /opt/dddns/dddns.service /etc/systemd/system/ddns.service
+    sudo ln -s /opt/dddns/dddns.timer /etc/systemd/system/dddns.timer
+    sudo ln -s /opt/dddns/dddns.service /etc/systemd/system/dddns.service
     systemctl enable --now ddns.timer
