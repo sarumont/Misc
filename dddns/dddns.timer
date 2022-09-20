@@ -1,0 +1,11 @@
+[Unit]
+Description=Update DDDNS regularly
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=15min
+Unit=dddns.service
+
+[Install]
+WantedBy=timers.target
+
