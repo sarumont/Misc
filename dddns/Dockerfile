@@ -1,5 +1,5 @@
 FROM docker.io/curlimages/curl:8.8.0
 
-ADD ./dddns.sh /root/
+COPY --chmod=0755 dddns.sh .
 
-CMD /root/dddns.sh
+CMD ./dddns.sh
