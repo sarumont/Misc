@@ -4,7 +4,7 @@ After=network-online.target
 Wants=network-online.target  
 
 [Service]
-ExecStart=/usr/local/bin/squeeze2upnp-linux-x86_64 -Z -I -b 172.21.1.10:49152 -s 172.21.1.10 -x /etc/upnpbridge.xml
+ExecStart=/usr/local/bin/squeeze2upnp-linux-x86_64 -Z -I -b 172.21.1.10:49152 -s 172.21.1.40 -x /etc/upnpbridge.xml
 Restart=on-failure  
 RestartSec=30  
 
